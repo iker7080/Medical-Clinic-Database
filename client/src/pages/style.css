@@ -1,0 +1,214 @@
+/* Main App Container */
+.App {
+    height: 100vh;
+    padding: 0 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease-in-out;
+    overflow-y: auto; /* Allow scrolling if content exceeds viewport height */
+}
+
+/* Doctors List */
+.doctors {
+    display: flex;
+    flex-wrap: wrap; /* Allows the doctor cards to wrap to a new row */
+    gap: 20px;
+    justify-content: center; /* Centers the doctor cards */
+    align-items: flex-start;
+    width: 100%; 
+    max-width: 1200px; /* Limits the width of the content */
+}
+
+/* Individual Doctor Card */
+.doctor {
+    position: relative; /* Positioning for ::before pseudo-element */
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 350px; /* Ensures all boxes have the same width */
+    box-sizing: border-box; /* Ensures padding is included in width calculations */
+}
+
+/* Hover effect for Doctor card */
+.doctor:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Container */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add transition */
+}
+
+.form:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+/* Input Fields */
+input {
+    width: 250px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Error Input Style */
+.input-error {
+    border-color: red; /* Change border color to red */
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.6); /* Red glow */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.form select {
+    -webkit-appearance: none; /* Remove default dropdown arrow in Webkit browsers */
+    -moz-appearance: none; /* Remove default dropdown arrow in Firefox */
+    appearance: none; /* Remove the default dropdown arrow */
+    width: 250px;
+    padding: 12px 12px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: rgb(95, 198, 95);
+    box-shadow: 0 0 8px rgba(95, 198, 95, 0.5);
+}
+
+select:focus {
+    outline: none;
+    border-color: rgb(95, 198, 95);
+    box-shadow: 0 0 8px rgba(95, 198, 95, 0.5);
+}
+
+/* Button Styles for delete and update */
+.delete, .update, .add {
+    padding: 8px 12px;
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    margin: 2px; /* space between buttons */
+}
+
+/* Delete Button */
+.delete {
+    border-color: red;
+    color: red;
+}
+
+.delete:hover {
+    background-color: red;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Add Button */
+.add {
+    border-color: rgb(86, 149, 237);
+    color: rgb(86, 149, 237);
+}
+
+.add:hover {
+    background-color: rgb(86, 149, 237);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Update Button */
+.update {
+    border-color: green;
+    color: green;
+}
+
+.update:hover {
+    background-color: green;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Login Button */
+.login {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(95, 198, 95); /* Green background */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login:hover {
+    background-color: rgb(75, 178, 75); /* Darker green on hover */
+    transform: translateY(-3px);
+}
+
+/* Logout Button */
+.logout {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: red; /* Red background */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout:hover {
+    background-color: rgb(187, 2, 2);
+    transform: translateY(-3px);
+}
+
+/* Form Button */
+.formButton {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    background-color: rgb(95, 198, 95);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.formButton:hover {
+    background-color: rgb(75, 178, 75);
+    transform: translateY(-3px);
+}
+
+/* Form Button Focus */
+.formButton:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(95, 198, 95, 0.6);
+}
+
+/* Remove underline from links */
+.no-underline {
+    text-decoration: none; /* Removes the underline */
+    color: inherit; /* Optional: makes the link color inherit from its parent */
+}

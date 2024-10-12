@@ -1,0 +1,1 @@
+drop database medical_clinic_database
