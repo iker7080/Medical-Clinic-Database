@@ -46,10 +46,10 @@ const Login = () => {
                         case 'Nurse': 
                             navigate("/nurse_view");
                             break;
-                        case 'Billing_Staff':
+                        case 'BillingStaff':
                             navigate("/billing_staff_view");
                             break;
-                        case 'Office_Staff':
+                        case 'OfficeStaff':
                             navigate("/office_staff_view");
                             break; 
                         case 'Director':

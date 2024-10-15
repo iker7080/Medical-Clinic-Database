@@ -129,6 +129,7 @@ CREATE TABLE `billingstaff` (
 
 LOCK TABLES `billingstaff` WRITE;
 /*!40000 ALTER TABLE `billingstaff` DISABLE KEYS */;
+INSERT INTO `billingstaff` VALUES ('E34567890','Bill','Jones','555-9876','bill.jones@example.com','789 Pine St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E34567890',NULL,NULL);
 /*!40000 ALTER TABLE `billingstaff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,6 +161,7 @@ CREATE TABLE `director` (
 
 LOCK TABLES `director` WRITE;
 /*!40000 ALTER TABLE `director` DISABLE KEYS */;
+INSERT INTO `director` VALUES ('E56789012','Mike Davis','555-6789','654 Maple St','mike.davis@example.com','2024-10-14 19:32:34','E56789012',NULL);
 /*!40000 ALTER TABLE `director` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +204,7 @@ CREATE TABLE `doctors` (
 
 LOCK TABLES `doctors` WRITE;
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
-INSERT INTO `doctors` VALUES ('E5399533','Cardiologist','Jimo','Jones','3333333333',NULL,'123 sesame street',NULL,NULL,NULL,NULL,NULL,'2024-10-06 02:33:51',NULL,'2024-10-06 02:33:51',NULL),('E6552644','Radiologist','John','Smith','5555555555',NULL,'333 lucky ave',NULL,NULL,NULL,NULL,NULL,'2024-10-05 18:25:24',NULL,'2024-10-05 18:25:24',NULL);
+INSERT INTO `doctors` VALUES ('E12345678','General Medicine','John','Doe','555-1234','john.doe@example.com','123 Main St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E12345678',NULL,NULL),('E5399533','Cardiologist','Jimo','Jones','3333333333',NULL,'123 sesame street',NULL,NULL,NULL,NULL,NULL,'2024-10-06 02:33:51',NULL,'2024-10-06 02:33:51',NULL),('E6552644','Radiologist','John','Smith','5555555555',NULL,'333 lucky ave',NULL,NULL,NULL,NULL,NULL,'2024-10-05 18:25:24',NULL,'2024-10-05 18:25:24',NULL);
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +259,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES ('E5399533','Jimo','Jones','Doctor'),('E6552644','John','Smith','Doctor'),('E80779948','John','Smith','Doctor');
+INSERT INTO `employee` VALUES ('E12345678','John','Doe','Doctor'),('E23456789','Jane','Smith','Nurse'),('E34567890','Bill','Jones','BillingStaff'),('E45678901','Alice','Brown','OfficeStaff'),('E5399533','Jimo','Jones','Doctor'),('E56789012','Mike','Davis','Director'),('E6552644','John','Smith','Doctor'),('E80779948','John','Smith','Doctor');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +286,7 @@ CREATE TABLE `employee_password` (
 
 LOCK TABLES `employee_password` WRITE;
 /*!40000 ALTER TABLE `employee_password` DISABLE KEYS */;
-INSERT INTO `employee_password` VALUES ('E5399533','Abcd1234','2024-10-09 12:25:13','2024-10-09 12:25:13');
+INSERT INTO `employee_password` VALUES ('E12345678','Doctor','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E23456789','Nurse','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E34567890','BillingStaff','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E45678901','OfficeStaff','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E5399533','Abcd1234','2024-10-09 12:25:13','2024-10-09 12:25:13'),('E56789012','Director','2024-10-14 19:33:47','2024-10-14 19:33:47');
 /*!40000 ALTER TABLE `employee_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -509,6 +511,7 @@ CREATE TABLE `nurses` (
 
 LOCK TABLES `nurses` WRITE;
 /*!40000 ALTER TABLE `nurses` DISABLE KEYS */;
+INSERT INTO `nurses` VALUES ('E23456789','Jane','Smith','555-5678','jane.smith@example.com','456 Elm St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E23456789',NULL,NULL);
 /*!40000 ALTER TABLE `nurses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -585,6 +588,7 @@ CREATE TABLE `officestaff` (
 
 LOCK TABLES `officestaff` WRITE;
 /*!40000 ALTER TABLE `officestaff` DISABLE KEYS */;
+INSERT INTO `officestaff` VALUES ('E45678901','Alice','Brown','555-4321','alice.brown@example.com','321 Oak St',0,'all day','all day','all day','all day','all day','2024-10-14 19:32:34','E45678901',NULL,NULL);
 /*!40000 ALTER TABLE `officestaff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,6 +640,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+INSERT INTO `patient` VALUES ('M12345678','B12345678','Emily','Johnson',30,'1994-06-15','123 Maple Ave','Apt 2','Springfield','IL','62701','emily.johnson@example.com',NULL,'555-1234',NULL,'555-5678','John Johnson, 555-9876',0,0.00,'2024-10-14 19:39:31','E12345678',NULL,NULL);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -662,6 +667,7 @@ CREATE TABLE `patient_password` (
 
 LOCK TABLES `patient_password` WRITE;
 /*!40000 ALTER TABLE `patient_password` DISABLE KEYS */;
+INSERT INTO `patient_password` VALUES ('M12345678','Patient','2024-10-14 19:39:31','2024-10-14 19:39:31');
 /*!40000 ALTER TABLE `patient_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -737,4 +743,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-12 13:46:44
+-- Dump completed on 2024-10-14 19:43:16

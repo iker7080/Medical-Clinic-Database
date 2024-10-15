@@ -24,7 +24,7 @@ const Patient_View = () => {
             <h1>Patient Information</h1>
             <p>ID: {patient.medical_ID}</p>
             <p>Name: {patient.first_name} {patient.last_name}</p>
-            <p>Role: {patient.role}</p>
+            <p>Role: Patient </p>
         </div>
     );
 };
