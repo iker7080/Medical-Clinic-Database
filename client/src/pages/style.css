@@ -212,3 +212,24 @@ select:focus {
     text-decoration: none; /* Removes the underline */
     color: inherit; /* Optional: makes the link color inherit from its parent */
 }
+
+/* Checkbox Styles */
+.show-password {
+    display: flex;
+    align-items: center; 
+    gap: 0px; 
+    margin-top: 2px; 
+}
+
+.checkbox {
+    width: 20px; 
+    height: 20px; 
+    cursor: pointer; 
+    margin-right: 8px; 
+    accent-color: rgb(95, 198, 95); 
+}
+
+
+.show-password label {
+    font-size: 10px; 
+}

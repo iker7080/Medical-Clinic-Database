@@ -6,6 +6,7 @@ import './style.css';
 const Login = () => {
     const [ID, setID] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -17,6 +18,10 @@ const Login = () => {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
         setError(''); // Clear error on input change
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleClick = async (e) => {
@@ -74,6 +79,7 @@ const Login = () => {
         }
     };
 
+
     return (
         <div>
             <h1>Login:</h1>
@@ -86,12 +92,17 @@ const Login = () => {
                     className={error ? 'input-error' : ''} 
                 />
                 <input 
-                    type="password" 
+                    type={showPassword ? 'text' : 'password'} 
                     placeholder="Password" 
                     onChange={handlePasswordChange} 
                     name="password" 
                     className={error ? 'input-error' : ''} 
                 />
+                <label className="show-password">
+    <               input type="checkbox" checked={showPassword} onChange={togglePasswordVisibility} className="checkbox" />
+                    Show Password
+                </label>
+
                 {error && <div style={{ color: 'red' }}>{error}</div>}
                 <button className="formButton" onClick={handleClick}>Login</button>
             </div>
@@ -100,3 +111,5 @@ const Login = () => {
 };
 
 export default Login;
+
+
