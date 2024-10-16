@@ -48,11 +48,11 @@ CREATE TABLE `appointment` (
   KEY `patientmedicalID` (`patientmedicalID`),
   KEY `doctorID` (`doctorID`),
   KEY `nurseID` (`nurseID`),
-  KEY `appointment_type` (`appointment_type`),
+  KEY `appointment_ibfk_4` (`appointment_type`),
   CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`patientmedicalID`) REFERENCES `patient` (`medical_ID`),
   CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`doctorID`) REFERENCES `doctors` (`employee_ID`),
   CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`nurseID`) REFERENCES `nurses` (`employee_ID`),
-  CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`appointment_type`) REFERENCES `doctors` (`specialty`),
+  CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`appointment_type`) REFERENCES `billing_cost_table` (`appointment_type`),
   CONSTRAINT `appointment_chk_1` CHECK ((`appointment_ID` like _utf8mb4'A%')),
   CONSTRAINT `appointment_chk_2` CHECK (((`patientWeight` > 0) and (`patientWeight` < 1000))),
   CONSTRAINT `appointment_chk_3` CHECK ((`patientHR` between 50 and 150))
@@ -78,8 +78,7 @@ DROP TABLE IF EXISTS `billing_cost_table`;
 CREATE TABLE `billing_cost_table` (
   `appointment_type` varchar(50) NOT NULL,
   `cost` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`appointment_type`),
-  CONSTRAINT `billing_cost_table_ibfk_1` FOREIGN KEY (`appointment_type`) REFERENCES `appointment` (`appointment_type`)
+  PRIMARY KEY (`appointment_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -89,6 +88,7 @@ CREATE TABLE `billing_cost_table` (
 
 LOCK TABLES `billing_cost_table` WRITE;
 /*!40000 ALTER TABLE `billing_cost_table` DISABLE KEYS */;
+INSERT INTO `billing_cost_table` VALUES ('Cardiologist',250.00),('Gastroenterologist',175.00),('General Practitioner',100.00),('Immunologist',160.00),('Obstetrician',180.00),('Oncologist',200.00),('Pediatrician',120.00),('Radiologist',150.00);
 /*!40000 ALTER TABLE `billing_cost_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +349,7 @@ CREATE TABLE `family_history` (
   PRIMARY KEY (`history_ID`),
   KEY `medical_ID` (`medical_ID`),
   CONSTRAINT `family_history_ibfk_1` FOREIGN KEY (`medical_ID`) REFERENCES `medical_record` (`medical_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,6 +358,7 @@ CREATE TABLE `family_history` (
 
 LOCK TABLES `family_history` WRITE;
 /*!40000 ALTER TABLE `family_history` DISABLE KEYS */;
+INSERT INTO `family_history` VALUES (1,'M12345678','Mother','Diabetes');
 /*!40000 ALTER TABLE `family_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -424,7 +425,7 @@ CREATE TABLE `medical_history` (
   PRIMARY KEY (`history_ID`),
   KEY `medical_ID` (`medical_ID`),
   CONSTRAINT `medical_history_ibfk_1` FOREIGN KEY (`medical_ID`) REFERENCES `medical_record` (`medical_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -433,6 +434,7 @@ CREATE TABLE `medical_history` (
 
 LOCK TABLES `medical_history` WRITE;
 /*!40000 ALTER TABLE `medical_history` DISABLE KEYS */;
+INSERT INTO `medical_history` VALUES (1,'M12345678','Hypertension','Lifestyle changes','Lisinopril','2024-01-10',0);
 /*!40000 ALTER TABLE `medical_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -471,6 +473,7 @@ CREATE TABLE `medical_record` (
 
 LOCK TABLES `medical_record` WRITE;
 /*!40000 ALTER TABLE `medical_record` DISABLE KEYS */;
+INSERT INTO `medical_record` VALUES ('M12345678',65,60.50,'Female','1994-06-15','None','John Johnson, 555-987-6543','2024-10-16 12:08:47','E12345678','2024-10-16 12:08:47','E12345678');
 /*!40000 ALTER TABLE `medical_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -548,6 +551,7 @@ CREATE TABLE `office` (
 
 LOCK TABLES `office` WRITE;
 /*!40000 ALTER TABLE `office` DISABLE KEYS */;
+INSERT INTO `office` VALUES ('North','North Office','123 North St, Houston','north.office@medcenter.com','555-0001','Mon-Fri 9am-5pm','E56789012','','2024-10-16 12:01:28','E56789012','2024-10-16 12:01:28','E56789012'),('South','South Office','456 South St, Houston','south.office@medcenter.com','555-0002','Mon-Fri 9am-5pm','E56789012','','2024-10-16 12:01:28','E56789012','2024-10-16 12:01:28','E56789012'),('East','East Office','789 East St, Houston','east.office@medcenter.com','555-0003','Mon-Fri 9am-5pm','E56789012','','2024-10-16 12:01:28','E56789012','2024-10-16 12:01:28','E56789012'),('West','West Office','321 West St, Houston','west.office@medcenter.com','555-0004','Mon-Fri 9am-5pm','E56789012','','2024-10-16 12:01:28','E56789012','2024-10-16 12:01:28','E56789012');
 /*!40000 ALTER TABLE `office` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -743,4 +747,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-14 19:43:16
+-- Dump completed on 2024-10-16 12:28:40
