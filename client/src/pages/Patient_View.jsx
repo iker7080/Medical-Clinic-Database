@@ -6,6 +6,7 @@ import './style.css';
 
 const Patient_View = () => {
     const [patient, setPatient] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const patient_Data = localStorage.getItem('patient');
@@ -14,6 +15,12 @@ const Patient_View = () => {
             setPatient(JSON.parse(patient_Data));
         }
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('patient'); // Clear patient info
+        navigate('/'); // Navigate to the main page
+    };
+
 
     if (!patient) {
         return <div>No patient information found.</div>;
@@ -25,6 +32,7 @@ const Patient_View = () => {
             <p>ID: {patient.medical_ID}</p>
             <p>Name: {patient.first_name} {patient.last_name}</p>
             <p>Role: Patient </p>
+            <button className = "logout" onClick={handleLogout}>Logout</button> 
         </div>
     );
 };
