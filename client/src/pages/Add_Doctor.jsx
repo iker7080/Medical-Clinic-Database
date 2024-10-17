@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
 const randomEmployeeID = () => { // generate a random employee id
-    return Math.floor(Math.random() * 100000000);
+    return Math.floor(Math.random() * 1000000000);
   }
 const Add_Doctor = () => {
   const [doctor, setDoctor] = useState({
