@@ -1,0 +1,163 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+/* Button Styles for delete and update */
+.delete, .update, .add {
+    padding: 8px 12px;
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    margin: 2px; /* space between buttons */
+}
+
+/* Delete Button */
+.delete {
+    border-color: red;
+    color: red;
+}
+
+.delete:hover {
+    background-color: red;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Add Button */
+.add {
+    border-color: rgb(86, 149, 237);
+    color: rgb(86, 149, 237);
+}
+
+.add:hover {
+    background-color: rgb(86, 149, 237);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Update Button */
+.update {
+    border-color: green;
+    color: green;
+}
+
+.update:hover {
+    background-color: green;
+    color: white;
+    transform: scale(1.05);
+}
+.di_dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    grid-template-rows: auto; /* Automatic height */
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.di_header {
+    grid-column: 1 / -1; /* Span across all columns */
+    text-align: center;
+    background-color: #007BFF;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.di_container {
+    background-color: #e0e0e0; /* Light background for neomorphism */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), 
+                -8px -8px 15px rgba(255, 255, 255, 0.7);
+    transition: transform 0.3s, box-shadow 0.3s; /* Transition for hover effect */
+    max-height: 300px; /* Set a maximum height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Specific styles for larger containers */
+.di_large {
+    grid-column: span 2; /* Span across two columns */
+}
+
+.di_container:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), 
+                -4px -4px 10px rgba(255, 255, 255, 0.9);
+}
+
+.di_patients {
+    background-color: #e7f3fe; /* Light blue for patients overview */
+}
+
+.di_appointments {
+    background-color: #fce8e6; /* Light red for appointments */
+}
+
+.di_reports {
+    background-color: #e8f5e9; /* Light green for reports */
+}
+
+.di_staff {
+    background-color: #fff3e0; /* Light orange for staff management */
+}
+
+.di_doctors {
+    background-color: #f1f8e9; /* Light green for doctors */
+}
+
+.di_info-card {
+    background-color: inherit; /* Inherit the background color of the container */
+    margin: 10px 0; /* Space between cards */
+    padding: 15px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+}
+
+.di_info-card:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.di_info-card h3 {
+    margin: 0 0 8px;
+}
+
+.di_info-card p {
+    margin: 4px 0;
+}
+
+/* Styles for info cards */
+.di_info-card {
+    background-color: #ffffff; /* White background for info cards */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+}
+
+.di_info-card:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.di_info-card h3 {
+    margin: 0 0 8px;
+}
+
+.di_info-card p {
+    margin: 4px 0;
+}

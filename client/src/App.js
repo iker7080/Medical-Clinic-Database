@@ -14,7 +14,14 @@ import Nurse_View from "./pages/Nurse_View";
 import Billing_Staff_View from "./pages/Billing_Staff_View";
 import Office_Staff_View from "./pages/Office_Staff_View";
 import Director_View from "./pages/Director_View";
-import Patient_View from "./pages/Patient_View"; // Ensure this import is correct
+import Patient_View from "./pages/Patient_View"; 
+import Add_Staff from "./pages/Add_Staff"; 
+import Update_OfficeStaff from "./pages/Update_OfficeStaff";
+import Update_BillingStaff from "./pages/Update_BillingStaff";
+import Appointment_Info from "./pages/Appointment_Info";
+import Patient_Info from "./pages/Patient_Info";
+
+
 
 function App() {
   return (
@@ -28,11 +35,16 @@ function App() {
           <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
-          <Route path="/patient_view" element={<Patient_View />} /> {/* Corrected route */}
+          <Route path="/patient_view" element={<Patient_View />} /> 
+          <Route path="/appointment_info/:appointmentId" element={<Appointment_Info />} />
+          <Route path="/patient_info/:id" element={<Patient_Info />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="*" element={<Not_Found />} />
           <Route path="/add_doctor" element={<Add_Doctor />} />
           <Route path="/update_doctor/:employee_ID" element={<Update_Doctor />} />
+          <Route path="/add_staff" element={<Add_Staff />} />
+          <Route path="/update_officestaff/:employee_ID" element={<Update_OfficeStaff />} />
+          <Route path="/update_billingstaff/:employee_ID" element={<Update_BillingStaff />} />  
         </Routes>
       </BrowserRouter>
     </div>  

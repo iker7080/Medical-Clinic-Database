@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Container styles for info pages */
+.info_container {
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), 
+                -8px -8px 15px rgba(255, 255, 255, 0.7);
+    transition: transform 0.3s, box-shadow 0.3s; /* Transition for hover effect */
+}
+
+/* Patient Info Specific Styles */
+.di_patients .info_container {
+    background-color: #e7f3fe; /* Light blue for patients overview */
+}
+
+.di_patients:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), 
+                -4px -4px 10px rgba(255, 255, 255, 0.9);
+}
+
+/* Appointment Info Specific Styles */
+.ppointments .info_container {
+    background-color: #fce8e6; /* Light red for appointments */
+}
+
+.info_card {
+    background-color: #ffffff; /* White background for info cards */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+}
+
+.info_card:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.info_card h3 {
+    margin: 0 0 8px;
+}
+
+.info_card p {
+    margin: 4px 0;
+}
