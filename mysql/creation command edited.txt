@@ -284,3 +284,24 @@ CREATE TABLE Employee_Schedule_Location (
     FOREIGN KEY (fri_avail) REFERENCES Office(location_ID)
 );
 
+
+CREATE TABLE Referral (
+    referral_ID VARCHAR(9) PRIMARY KEY CHECK (referral_ID LIKE 'R%'),
+    originating_doctor_ID VARCHAR(9) NOT NULL,
+    originating_doctor_contact_info VARCHAR(15) NOT NULL,
+    receiving_doctor_ID VARCHAR(9) NOT NULL,
+    receiving_doctor_contact_info VARCHAR(15) NOT NULL,
+    patient_ID VARCHAR(9) NOT NULL,
+    patient_contact_info VARCHAR(15) NOT NULL,
+    status ENUM('not reviewed', 'accepted', 'rejected'),
+    date_created DATETIME NOT NULL,
+    date_reviewed DATETIME,
+    reason VARCHAR(200) NOT NULL,
+    created DATETIME NOT NULL,
+    creatorID VARCHAR(255) CHECK (creatorID LIKE 'E%'),
+    last_edited DATETIME,
+    last_editedID VARCHAR(255) CHECK (last_editedID LIKE 'E%'),
+    FOREIGN KEY (originating_doctor_ID) REFERENCES Doctors(employee_ID),
+    FOREIGN KEY (receiving_doctor_ID) REFERENCES Doctors(employee_ID),
+    FOREIGN KEY (patient_ID) REFERENCES Patient(medical_ID)
+);

@@ -8,53 +8,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
-/* Button Styles for delete and update */
-.delete, .update, .add {
-    padding: 8px 12px;
-    border: 2px solid;
-    border-radius: 10px;
-    background-color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    margin: 2px; /* space between buttons */
-}
 
-/* Delete Button */
-.delete {
-    border-color: red;
-    color: red;
-}
-
-.delete:hover {
-    background-color: red;
-    color: white;
-    transform: scale(1.05);
-}
-
-/* Add Button */
-.add {
-    border-color: rgb(86, 149, 237);
-    color: rgb(86, 149, 237);
-}
-
-.add:hover {
-    background-color: rgb(86, 149, 237);
-    color: white;
-    transform: scale(1.05);
-}
-
-/* Update Button */
-.update {
-    border-color: green;
-    color: green;
-}
-
-.update:hover {
-    background-color: green;
-    color: white;
-    transform: scale(1.05);
-}
 .di_dashboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three equal columns */
