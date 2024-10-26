@@ -12,6 +12,10 @@ import Employee_Info from "./pages/Employee_Info";
 import Doctor_View from "./pages/Doctor_View";
 import Nurse_View from "./pages/Nurse_View";
 import Billing_Staff_View from "./pages/Billing_Staff_View";
+import Created_invoice from "./pages/Created_invoice";
+import SearchPatient from "./pages/SearchPatient";
+import See_Patient_Balance from "./pages/See_Patient_Balance";
+
 import Office_Staff_View from "./pages/Office_Staff_View";
 import Director_View from "./pages/Director_View";
 import Patient_View from "./pages/Patient_View"; 
@@ -32,6 +36,10 @@ function App() {
           <Route path="/employee_info" element={<Employee_Info />} />
           <Route path="/doctor_view" element={<Doctor_View />} />
           <Route path="/nurse_view" element={<Nurse_View />} />
+          <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
+          <Route path="/billing_staff_view/SearchPatient" element={<SearchPatient />} />
+          <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance" element={<See_Patient_Balance />} />
+          <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance/Created_invoice" element={<Created_invoice />} />
           <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
