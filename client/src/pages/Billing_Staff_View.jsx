@@ -22,6 +22,11 @@ const Billing_Staff_View = () => {
     };
 
 
+
+    const handleonClick = (e) => {
+        navigate("/billing_staff_view/SearchPatient");
+    }
+   
     if (!employee) {
         return <div>No employee information found.</div>;
     }
@@ -32,7 +37,8 @@ const Billing_Staff_View = () => {
             <p>ID: {employee.employee_ID}</p>
             <p>Name: {employee.first_name} {employee.last_name}</p>
             <p>Role: {employee.role}</p>
-            <button className = "logout" onClick={handleLogout}>Logout</button> 
+            <button onClick={handleonClick}>Search Patient</button>
+            <button className = "logout" onClick={handleLogout}>Logout</button>
         </div>
     );
 };
