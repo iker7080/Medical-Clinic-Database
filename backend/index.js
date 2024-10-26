@@ -89,6 +89,62 @@ app.post("/login", (req, res) => {
     }
 });
 
+// Get specific info for a patient
+app.post("/SearchPatient", (req, res) => {
+    const { patientID, option} = req.body;
+
+    console.log(option);
+    console.log(patientID);
+
+    const q1 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID FROM appointment, billing_cost_table, patient WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.patientmedicalID = ? AND appointment.isPaid =0;";
+    const q2 = "SELECT medical_ID FROM patient WHERE medical_ID = ?;";
+
+    if(!option){
+        db.query(q1, [patientID], (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.json(data);
+        });
+    }else{
+        db.query(q2, [patientID], (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.json(data);
+        });
+    }
+    return;
+});
+
+// Get an office location for invoice purposes
+app.post("/Created_invoice", (req, res) => {
+    const {offID} = req.body;
+    console.log(offID);
+
+    const q = "SELECT * FROM office WHERE location_ID = ?;";
+
+    db.query(q, [offID], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+
+});
+
+
+// Switch appointment to paid
+app.put("/See_Patient_Balance", (req, res) => {
+    const  patientID  = req.params.id;
+
+    const values =[
+        req.body.ID
+    ]
+
+    console.log(values);
+    const q = "UPDATE appointment SET isPaid = 1 WHERE appointment_ID = ?;";
+    db.query(q, [values, patientID], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+});
+
+
 // Get doctors
 app.get("/doctors", (req, res) => {
     const q = "SELECT * FROM doctors";
