@@ -46,6 +46,7 @@ CREATE TABLE `appointment` (
   `created_by` varchar(9) DEFAULT NULL,
   `last_edited` datetime DEFAULT NULL,
   `last_edited_ID` varchar(9) DEFAULT NULL,
+  ´isPaid´ boolean DEFAULT 0,
   PRIMARY KEY (`appointment_ID`),
   KEY `patientmedicalID` (`patientmedicalID`),
   KEY `doctorID` (`doctorID`),
