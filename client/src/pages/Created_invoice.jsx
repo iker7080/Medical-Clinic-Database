@@ -1,0 +1,112 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import logo from '../assets/redcross.png';
+import './style.css';
+
+
+const Created_invoice = () => {
+
+    const navigate = useNavigate();
+    const [appointment, setAppointment] = useState('');
+    const today = new Date();
+    const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+
+    const [office, setOffice] = useState('');
+    
+
+
+    useEffect(() => {
+        const app_Data = localStorage.getItem('single_appointment');
+        console.log('Retrieved appointment data:', app_Data);
+        if (app_Data) {
+            setAppointment(JSON.parse(app_Data));
+        }
+        const off_Data = localStorage.getItem('office_loc');
+        if (off_Data) {
+            setOffice(JSON.parse(off_Data)[0]);
+            console.log('Retrieved office data:', office);
+
+        }
+    }, []);
+
+    const handlePrint = () => {
+        window.print();
+    }
+
+
+    const handleLogout = async () => {
+        localStorage.removeItem('single_appointment'); // Clear appointment info
+        localStorage.removeItem('office_loc');
+        
+        localStorage.removeItem('patient');
+        const patientID = appointment.medical_ID;
+        console.log("ID: ", patientID);
+        const res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID}); 
+        localStorage.setItem('patient', JSON.stringify(res.data));
+
+
+
+        navigate('/Billing_Staff_View/SearchPatient/See_Patient_Balance'); // Navigate to the main page
+    };
+
+    
+    return (
+        <div className='invoice'>
+            <div style={{ textAlign: 'left' }}>
+
+
+                <h1 className='container'>
+                        <img src={logo} alt="redcross logo" className='image' style={{ width: '200px', height: '150px' }}/>
+                        <div className='text'>
+                            <br /> Hospital
+                            <br />{office.name} Location
+                            <br />{office.address} 
+                        </div>
+                                       
+                </h1>
+            
+            
+            
+            <br />Issue date (MM/DD/YYYY): {formattedDate}
+            <h2>Invoice To:</h2>
+            {appointment.first_name} {appointment.last_name}
+            <br />{appointment.address_line_1} {appointment.address_line_2}
+            <br />{appointment.city}, {appointment.state} {appointment.zip}
+            <h4>Status: <span style = {{color : 'green'}}>PAID</span></h4>
+            
+            Appointment ID: {appointment.appointment_ID}
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{appointment.appointment_type} appointment
+                            <div className= "tab">
+                            Doctor: {appointment.doctor}
+                            <br /> Nurse: {appointment.nurse}
+                            </div>
+                            
+                        </td>
+                        <td>1</td>
+                        <td> ${appointment.cost}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <h4 style={{ textAlign: 'right' }} >Total $ {appointment.cost}</h4>
+            <br /><button onClick={handleLogout}>Return</button> <button onClick={handlePrint}>Print This Page</button>
+        </div>
+    );
+};
+
+
+
+export default Created_invoice;
