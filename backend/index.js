@@ -89,6 +89,7 @@ app.post("/login", (req, res) => {
     }
 });
 
+//invoice queries
 // Get specific info for a patient
 app.post("/SearchPatient", (req, res) => {
     const { patientID, option, choice} = req.body;
@@ -184,6 +185,8 @@ app.post("/See_Patient_Balance", (req, res) => {
         return res.json(data);
     });
 });
+//end of invoice queries
+
 
 
 
