@@ -34,28 +34,43 @@ const See_Patient_Balance = () => {
         navigate('/Billing_Staff_View/SearchPatient'); // Navigate to the main page
     };
 
+
+    const handleButtonClick = () => {
+        const userConfirmed = window.confirm('Are you sure you want to proceed?');
+    
+        if (userConfirmed) {
+          // The user clicked "OK"
+          return true;
+        } else {
+          // The user clicked "Cancel"
+          return false;
+
+        }
+    };
    
     if (!patient) {
         return <div>No patient information found.</div>;
     }
 
     const handleonClick = async (index) =>{
+       if(!handleButtonClick()){
+            return;
+       }
         localStorage.setItem('single_appointment', JSON.stringify(patient[index]));
         const ID = patient[index].appointment_ID;
 
         console.log("app index: ", ID);
-
-        await axios.put(`http://localhost:3000/See_Patient_Balance`, {ID});
-
         try{
-            console.log(patient[index].officeID);
+            await axios.put(`http://localhost:3000/See_Patient_Balance`, {ID});
+            await axios.post(`http://localhost:3000/See_Patient_Balance`, {ID});
+            console.log("office ID: ",patient[index].officeID);
+
             const offID = patient[index].officeID;
             const res = await axios.post(`http://localhost:3000/Created_invoice`, {offID});
             localStorage.setItem('office_loc', JSON.stringify(res.data));
             console.log("office retrieved: ",res.data);
-
-
         }catch(e){
+            console.log("catched");
             console.log(e);
             return;
         }
@@ -67,7 +82,7 @@ const See_Patient_Balance = () => {
 try{
     return (
         <div>
-            <h1>Patient Information</h1>
+            <h1>Unpaid Bills</h1>
             <p>ID: {patient[0].medical_ID}</p>
             <p>Name: {patient[0].first_name} {patient[0].last_name}</p>
 
@@ -101,10 +116,10 @@ try{
                 </table>
             </div>
 
-                <p>Total Due: $ {setTotal()}</p>
+                <h4>Total Due: $ {setTotal()}</h4>
 
 
-            <button className = "logout" onClick={handleLogout}>Done</button>
+            <button className = "logout" onClick={handleLogout}>Return</button>
 
         </div>
     );
