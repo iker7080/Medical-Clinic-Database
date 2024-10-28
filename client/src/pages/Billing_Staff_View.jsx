@@ -21,9 +21,21 @@ const Billing_Staff_View = () => {
         navigate('/'); // Navigate to the main page
     };
 
+    const getPastDueBills = async () =>{
+
+        const res = await axios.post(`http://localhost:3000/Past_Due_Patients`);
+        localStorage.setItem('Past_Due_Patients', JSON.stringify(res.data));
+        console.log(res.data);
+        navigate("/billing_staff_view/Past_Due_Patients");
+        return;
+
+    }
 
 
     const handleonClick = (e) => {
+        localStorage.setItem('choice', e);
+
+
         navigate("/billing_staff_view/SearchPatient");
     }
    
@@ -37,7 +49,9 @@ const Billing_Staff_View = () => {
             <p>ID: {employee.employee_ID}</p>
             <p>Name: {employee.first_name} {employee.last_name}</p>
             <p>Role: {employee.role}</p>
-            <button onClick={handleonClick}>Search Patient</button>
+            <button className = "option" onClick={() => handleonClick(false)}>Pay Due Bills of a Patient</button>
+            <button className = "option"onClick={() => handleonClick(true)}>View Previous Invoices of a Patient</button>
+            <button className = "option"onClick={getPastDueBills}>View Patients with Past Due Bills</button>
             <button className = "logout" onClick={handleLogout}>Logout</button>
         </div>
     );
