@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `medical_clinic_database` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
++-CREATE DATABASE  IF NOT EXISTS `medical_clinic_database` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `medical_clinic_database`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
@@ -46,7 +46,7 @@ CREATE TABLE `appointment` (
   `created_by` varchar(9) DEFAULT NULL,
   `last_edited` datetime DEFAULT NULL,
   `last_edited_ID` varchar(9) DEFAULT NULL,
-  ´isPaid´ boolean DEFAULT 0,
+  ´isPaid´ boolean not null DEFAULT 0,
   PRIMARY KEY (`appointment_ID`),
   KEY `patientmedicalID` (`patientmedicalID`),
   KEY `doctorID` (`doctorID`),
@@ -372,35 +372,13 @@ UNLOCK TABLES;
 -- Table structure for table `invoice`
 --
 
-DROP TABLE IF EXISTS `invoice`;
+DROP TABLE IF EXISTS `invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `invoice` (
-  `appointment_ID` varchar(9) NOT NULL,
-  `appointmentDateTime` datetime NOT NULL,
-  `patientBillingID` varchar(9) NOT NULL,
-  `InvoiceID` varchar(9) DEFAULT NULL,
-  `patient_name` varchar(64) NOT NULL,
-  `patient_address` varchar(100) NOT NULL,
-  `patient_phone` varchar(15) NOT NULL,
-  `patient_email` varchar(100) NOT NULL,
-  `patient_insurance` varchar(100) NOT NULL,
-  `services` varchar(150) NOT NULL,
-  `amountCharged` decimal(10,2) NOT NULL,
-  `amountDue` decimal(10,2) NOT NULL,
-  `created` datetime NOT NULL,
-  `creatorID` varchar(50) DEFAULT NULL,
-  `last_edited` datetime DEFAULT NULL,
-  `last_editedID` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`appointment_ID`),
-  KEY `patientBillingID` (`patientBillingID`),
-  KEY `creatorID` (`creatorID`),
-  CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`patientBillingID`) REFERENCES `patient` (`billingID`),
-  CONSTRAINT `invoice_ibfk_2` FOREIGN KEY (`creatorID`) REFERENCES `billingstaff` (`employee_ID`),
-  CONSTRAINT `invoice_chk_1` CHECK ((`appointment_ID` like _utf8mb4'A%')),
-  CONSTRAINT `invoice_chk_2` CHECK ((`InvoiceID` like _utf8mb4'I%')),
-  CONSTRAINT `invoice_chk_3` CHECK ((`creatorID` like _utf8mb4'E%')),
-  CONSTRAINT `invoice_chk_4` CHECK ((`last_editedID` like _utf8mb4'E%'))
+CREATE TABLE invoices (
+    appointment_ID VARCHAR(9) PRIMARY KEY CHECK (appointment_ID LIKE 'A%'),
+    issuedDate DATE DEFAULT (CURDATE()),
+    FOREIGN KEY (appointment_ID) REFERENCES appointment(appointment_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -408,9 +386,8 @@ CREATE TABLE `invoice` (
 -- Dumping data for table `invoice`
 --
 
-LOCK TABLES `invoice` WRITE;
+LOCK TABLES `invoices` WRITE;
 /*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
-INSERT INTO `invoice` VALUES ('A1234567','2023-10-15 10:00:00','B12345678','I1234567','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','General Practitioner',100.00,100.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A2345678','2023-11-05 14:30:00','B12345678','I2345678','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Cardiologist',250.00,250.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A3456789','2023-09-20 09:00:00','B12345678','I3456789','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Radiologist',150.00,150.00,'2023-09-01 12:00:00','E34567890',NULL,NULL),('A4567890','2023-12-01 11:00:00','B12345678','I4567890','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Gastroenterologist',175.00,0.00,'2023-10-01 12:00:00','E34567890',NULL,NULL);
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
