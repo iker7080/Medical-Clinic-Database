@@ -9,10 +9,12 @@ const Created_invoice = () => {
 
     const navigate = useNavigate();
     const [appointment, setAppointment] = useState('');
-    const today = new Date();
-    const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+    const choice = (localStorage.getItem('choice') === 'true');
 
+    
+    
     const [office, setOffice] = useState('');
+
     
 
 
@@ -34,20 +36,59 @@ const Created_invoice = () => {
         window.print();
     }
 
+    const handleButtonClick = () => {
+        const userConfirmed = window.confirm('Are you sure you want to proceed');
+    
+        if (userConfirmed) {
+          // The user clicked "OK"
+          return true;
+        } else {
+          // The user clicked "Cancel"
+          return false;
+
+        }
+    };
+
+    const getDate = () =>{
+        let today = new Date();
+        if(choice){
+
+            today = new Date(appointment.issuedDate);
+        }
+        let formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+        return formattedDate;
+
+    }
 
     const handleLogout = async () => {
+
+        if(!choice){
+            if(!handleButtonClick()){
+                return;
+            }
+        }
+
+        
+
         localStorage.removeItem('single_appointment'); // Clear appointment info
         localStorage.removeItem('office_loc');
         
-        localStorage.removeItem('patient');
-        const patientID = appointment.medical_ID;
-        console.log("ID: ", patientID);
-        const res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID}); 
-        localStorage.setItem('patient', JSON.stringify(res.data));
+        
 
-
-
-        navigate('/Billing_Staff_View/SearchPatient/See_Patient_Balance'); // Navigate to the main page
+       
+        if(!choice){
+            localStorage.removeItem('patient');
+            const patientID = appointment.medical_ID;
+            console.log("ID: ", patientID);
+            
+            const res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID}); 
+            localStorage.setItem('patient', JSON.stringify(res.data));
+            navigate('/Billing_Staff_View/SearchPatient/See_Patient_Balance');
+            return;
+    
+        }
+        navigate('/Billing_Staff_View/SearchPatient/See_Previous_Invoices');
+       
     };
 
     
@@ -68,7 +109,7 @@ const Created_invoice = () => {
             
             
             
-            <br />Issue date (MM/DD/YYYY): {formattedDate}
+            <br />Issue date (MM/DD/YYYY): {getDate()}
             <h2>Invoice To:</h2>
             {appointment.first_name} {appointment.last_name}
             <br />{appointment.address_line_1} {appointment.address_line_2}
