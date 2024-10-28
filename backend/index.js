@@ -91,21 +91,34 @@ app.post("/login", (req, res) => {
 
 // Get specific info for a patient
 app.post("/SearchPatient", (req, res) => {
-    const { patientID, option} = req.body;
+    const { patientID, option, choice} = req.body;
 
     console.log(option);
     console.log(patientID);
+    console.log(choice);
 
-    const q1 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID FROM appointment, billing_cost_table, patient WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.patientmedicalID = ? AND appointment.isPaid =0;";
-    const q2 = "SELECT medical_ID FROM patient WHERE medical_ID = ?;";
+
+    const q1 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID FROM appointment, billing_cost_table, patient WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.patientmedicalID = ? AND appointment.isPaid = 0;";
+    const q2 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, invoices.appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID, issuedDate FROM appointment, billing_cost_table, patient, invoices WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.appointment_ID = invoices.appointment_ID AND appointment.patientmedicalID = ? AND appointment.isPaid = 1;";
+    const q3 = "SELECT medical_ID FROM patient WHERE medical_ID = ?;";
 
     if(!option){
-        db.query(q1, [patientID], (err, data) => {
-            if (err) return res.status(500).json(err);
-            return res.json(data);
-        });
+        if(!choice){
+            console.log("q1");
+            db.query(q1, [patientID], (err, data) => {
+                if (err) return res.status(500).json(err);
+                return res.json(data);
+            });
+        }else{
+            console.log("q2");
+            db.query(q2, [patientID], (err, data) => {
+                if (err) return res.status(500).json(err);
+                return res.json(data);
+            });
+        }
+        
     }else{
-        db.query(q2, [patientID], (err, data) => {
+        db.query(q3, [patientID], (err, data) => {
             if (err) return res.status(500).json(err);
             return res.json(data);
         });
@@ -128,6 +141,18 @@ app.post("/Created_invoice", (req, res) => {
 });
 
 
+// Get Appointments that have not been paid in 2 weeks
+app.post("/Past_Due_Patients", (req, res) => {
+
+    const q = "SELECT  DISTINCT patient.medical_ID, patient.first_name, patient.last_name, patient.personal_email, home_phone, work_phone, cell_phone FROM appointment, patient WHERE (appointment.dateTime < DATE_SUB(CURDATE(), INTERVAL 14 DAY)) AND appointment.isPaid = 0 AND patient.medical_ID = appointment.patientmedicalID;";
+
+    db.query(q, (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+
+});
+
 // Switch appointment to paid
 app.put("/See_Patient_Balance", (req, res) => {
     const  patientID  = req.params.id;
@@ -143,6 +168,23 @@ app.put("/See_Patient_Balance", (req, res) => {
         return res.json(data);
     });
 });
+
+// Insert invoice
+app.post("/See_Patient_Balance", (req, res) => {
+    const  appointment_ID  = req.params.id;
+
+    const values =[
+        req.body.ID
+    ]
+
+    console.log(values);
+    const q = "INSERT INTO invoices (appointment_ID) VALUES (?);";
+    db.query(q, [values, appointment_ID], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+});
+
 
 
 // Get doctors
