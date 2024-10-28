@@ -11,11 +11,13 @@ const SearchPatient = () => {
     const [status, setStatus] = useState('');
     const [patientID, setpatientID] = useState('');
     let option = false;
+    const choice = (localStorage.getItem('choice') === 'true');
 
 
     useEffect(() => {
         const employee_Data = localStorage.getItem('employee');
         console.log('Retrieved employee data:', employee_Data); // Add this line for debugging
+        console.log(choice);
         if (employee_Data) {
             setEmployee(JSON.parse(employee_Data));
         }
@@ -31,6 +33,7 @@ const SearchPatient = () => {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem('choice');
         navigate('/Billing_Staff_View'); // Navigate to the main page
     };
 
@@ -47,25 +50,41 @@ const SearchPatient = () => {
             option = false;
             console.log(patientID);
             console.log(option);
+            
 
-            let res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID, option}); 
+            let res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID, option, choice}); 
+
+
             console.log(res.data);
-
-              
+            
             if (res.data.length  > 0) {
                 localStorage.setItem('patient', JSON.stringify(res.data));
                 setStatus("Success!!!");
                 console.log ("patient: ", res.data);
-                navigate("/billing_staff_view/SearchPatient/See_Patient_Balance");
+                if(!choice){
+                    navigate("/billing_staff_view/SearchPatient/See_Patient_Balance");
+                    return;
+                }else{
+                    console.log("here");
+                    navigate("/billing_staff_view/SearchPatient/See_Previous_Invoices");
+                    return;
+                }
             }else{
                 option = true;
                 console.log("here", option);
                 res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID, option});
                 console.log(res.data);
                 if(res.data.length  > 0){
-                    console.log("Patient has no amount due");
-                    setStatus("Patient has no amount due");
-                    return;
+                    if(!choice){
+                        console.log("Patient has no amount due");
+                        setStatus("Patient has no amount due");
+                        return;
+                    }else{
+                        console.log("Patient has no invoices");
+                        setStatus("Patient has no invoices");
+                        return;
+                    }
+                    
                 }else{
                     // If no data, set error
                     console.log("Not found. Please try again.");
@@ -80,9 +99,21 @@ const SearchPatient = () => {
         
     };
 
+    const displayMenu = () =>{
+        console.log("inside display menu: ", choice);
+        if(!choice){
+            console.log("opt false");
+            return "to Pay Invoices";
+        }else{
+            console.log("opt true");
+            return "to View Previous Invoices";
+        }
+
+    }
+
     return(
         <div>
-            <h1>Enter patient ID: </h1>
+            <h1>Enter patient ID {displayMenu()}: </h1>
         <input 
                     type="text" 
                     placeholder="patient ID" 
@@ -92,10 +123,11 @@ const SearchPatient = () => {
                 />
             <br />{error && <div style={{ color: 'red' }}>{error}</div>}
             {status && <div style={{ color: 'black' }}>{status}</div>}
-            <button onClick={searchpatientID}>Search Patient</button>
-            <div>
+            <br />
+            <button className = 'option' onClick={searchpatientID}>Search Patient</button>
+            <br />
+            <br />
                 <button className = "logout" onClick={handleLogout}>Logout</button>
-            </div>
             </div>
             
         
