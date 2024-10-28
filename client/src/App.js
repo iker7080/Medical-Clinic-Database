@@ -11,10 +11,13 @@ import Not_Found from "./pages/Not_Found";
 import Employee_Info from "./pages/Employee_Info";
 import Doctor_View from "./pages/Doctor_View";
 import Nurse_View from "./pages/Nurse_View";
+
 import Billing_Staff_View from "./pages/Billing_Staff_View";
 import Created_invoice from "./pages/Created_invoice";
 import SearchPatient from "./pages/SearchPatient";
 import See_Patient_Balance from "./pages/See_Patient_Balance";
+import See_Previous_Invoices from "./pages/See_Previous_Invoices";
+import Past_Due_Patients from "./pages/Past_Due_Patients";
 
 import Office_Staff_View from "./pages/Office_Staff_View";
 import Director_View from "./pages/Director_View";
