@@ -36,11 +36,14 @@ function App() {
           <Route path="/employee_info" element={<Employee_Info />} />
           <Route path="/doctor_view" element={<Doctor_View />} />
           <Route path="/nurse_view" element={<Nurse_View />} />
+  
           <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
           <Route path="/billing_staff_view/SearchPatient" element={<SearchPatient />} />
           <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance" element={<See_Patient_Balance />} />
+          <Route path="/billing_staff_view/SearchPatient/See_Previous_Invoices" element={<See_Previous_Invoices />} />
           <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance/Created_invoice" element={<Created_invoice />} />
-          <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
+          <Route path="/billing_staff_view/Past_Due_Patients" element={<Past_Due_Patients />} />
+  
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
           <Route path="/patient_view" element={<Patient_View />} /> 
