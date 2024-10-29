@@ -60,9 +60,16 @@ const See_Patient_Balance = () => {
         const ID = patient[index].appointment_ID;
 
         console.log("app index: ", ID);
+        console.log(patient[index].dateTime);
+        const correctdate= patient[index].dateTime.toString().slice(0, 19).replace('T', ' ');
+
         try{
+            const q = `INSERT INTO Invoice (appointment_ID, appointmentDateTime, patientBillingID, patient_name, patient_address, patient_phone, patient_email, patient_insurance, services, amountCharged, amountDue, created ) VALUES ('`+patient[index].appointment_ID+`','`+correctdate+`','`+patient[index].billingID+`','`+patient[index].first_name+' '+patient[index].last_name+`','`+patient[index].address_line_1+`','3332224552','johndoe@example.com','Insurance Company ABC','`+patient[index].appointment_type+`',`+patient[index].cost+`,0.00, CURRENT_TIMESTAMP);`;
+
+    console.log(q);
+            
             await axios.put(`http://localhost:3000/See_Patient_Balance`, {ID});
-            await axios.post(`http://localhost:3000/See_Patient_Balance`, {ID});
+            await axios.post(`http://localhost:3000/See_Patient_Balance`, {q});
             console.log("office ID: ",patient[index].officeID);
 
             const offID = patient[index].officeID;
