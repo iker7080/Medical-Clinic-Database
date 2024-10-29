@@ -99,8 +99,8 @@ app.post("/SearchPatient", (req, res) => {
     console.log(choice);
 
 
-    const q1 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID FROM appointment, billing_cost_table, patient WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.patientmedicalID = ? AND appointment.isPaid = 0;";
-    const q2 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, invoices.appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID, issuedDate FROM appointment, billing_cost_table, patient, invoices WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.appointment_ID = invoices.appointment_ID AND appointment.patientmedicalID = ? AND appointment.isPaid = 1;";
+   const q1 = "SELECT medical_ID, patient.billingID, first_name, last_name, address_line_1, address_line_2, city, state, zip, appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID FROM appointment, billing_cost_table, patient WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.patientmedicalID = ? AND appointment.isPaid = 0;";
+    const q2 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, invoice.appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID, invoice.created FROM appointment, billing_cost_table, patient, invoice WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.appointment_ID = invoice.appointment_ID AND appointment.patientmedicalID = ? AND appointment.isPaid = 1;";
     const q3 = "SELECT medical_ID FROM patient WHERE medical_ID = ?;";
 
     if(!option){
