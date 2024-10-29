@@ -172,15 +172,16 @@ app.put("/See_Patient_Balance", (req, res) => {
 
 // Insert invoice
 app.post("/See_Patient_Balance", (req, res) => {
-    const  appointment_ID  = req.params.id;
+    const  q  = req.body.q;
 
     const values =[
-        req.body.ID
+        req.body.q
     ]
 
-    console.log(values);
-    const q = "INSERT INTO invoices (appointment_ID) VALUES (?);";
-    db.query(q, [values, appointment_ID], (err, data) => {
+
+    console.log(q);
+    const temp = "INSERT INTO invoices (appointment_ID) VALUES (?);";
+    db.query(q, (err, data) => {
         if (err) return res.status(500).json(err);
         return res.json(data);
     });
