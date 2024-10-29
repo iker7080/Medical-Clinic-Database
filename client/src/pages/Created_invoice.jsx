@@ -53,7 +53,7 @@ const Created_invoice = () => {
         let today = new Date();
         if(choice){
 
-            today = new Date(appointment.issuedDate);
+            today = new Date(appointment.created);
         }
         let formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
         return formattedDate;
