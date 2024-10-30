@@ -97,9 +97,9 @@ const Created_invoice = () => {
             <div style={{ textAlign: 'left' }}>
 
 
-                <h1 className='container'>
-                        <img src={logo} alt="redcross logo" className='image' style={{ width: '200px', height: '150px' }}/>
-                        <div className='text'>
+                <h1 className='invoiceContainer'>
+                        <img src={logo} alt="redcross logo" className='invoiceImage' style={{ width: '200px', height: '150px' }}/>
+                        <div className='invoiceText'>
                             <br /> Hospital
                             <br />{office.name} Location
                             <br />{office.address} 
@@ -119,18 +119,18 @@ const Created_invoice = () => {
             Appointment ID: {appointment.appointment_ID}
             </div>
             
-            <table>
+            <table className='invoicetable'>
                 <thead>
-                    <tr>
+                    <tr className='invoiceth'>
                         <th>Item</th>
                         <th>Quantity</th>
                         <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr className='invoicetd'>
                         <td>{appointment.appointment_type} appointment
-                            <div className= "tab">
+                            <div className= "invoiceTab">
                             Doctor: {appointment.doctor}
                             <br /> Nurse: {appointment.nurse}
                             </div>
