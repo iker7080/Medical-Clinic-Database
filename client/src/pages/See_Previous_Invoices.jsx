@@ -59,14 +59,14 @@ try{
             <p>ID: {patient[0].medical_ID}</p>
             <p>Name: {patient[0].first_name} {patient[0].last_name}</p>
 
-            <div className='list'>
-                <table>
+            <div className='invoiceList'>
+                <table className='invoicetable'>
                     <thead>
                         <tr>
                             <th>Appointment ID</th>
                             <th>Date and Time</th>
                             <th>Doctor</th>
-                            <th>Payed On</th>
+                            <th>Paid On</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -76,7 +76,7 @@ try{
                                 <td>{patient.appointment_ID}</td>
                                 <td>{patient.dateTime}</td>
                                 <td>{patient.doctor}</td>
-                                <td>{patient.issuedDate}</td>
+                                <td>{patient.created}</td>
                                 <td>
                                     <button onClick={() => handleonClick(index)}>
                                         See Invoice
@@ -113,9 +113,3 @@ try{
 
 
 export default See_Previous_Invoices;
-    
-};
-
-
-
-export default See_Patient_Balance;
