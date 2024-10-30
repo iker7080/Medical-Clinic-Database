@@ -93,8 +93,8 @@ try{
             <p>ID: {patient[0].medical_ID}</p>
             <p>Name: {patient[0].first_name} {patient[0].last_name}</p>
 
-            <div className='list'>
-                <table>
+            <div className='invoiceList'>
+                <table className='invoicetable'>
                     <thead>
                         <tr>
                             <th>Appointment ID</th>
