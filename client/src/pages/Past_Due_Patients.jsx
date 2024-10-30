@@ -36,8 +36,8 @@ try{
         <div>
             <h1>Past Due Patients</h1>
 
-            <div className='list'>
-                <table>
+            <div className='invoiceList'>
+                <table className='invoicetable'>
                     <thead>
                         <tr>
                             <th>Patient ID</th>
