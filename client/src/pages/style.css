@@ -13,7 +13,7 @@
 }
 
 /*Invoice style */
-.list{
+.invoiceList{
     display: flex;
     width : 100%;
 }
@@ -24,51 +24,51 @@
 
 }
 
-.container {
+.invoiceContainer {
     display: flex;
     align-items: center;
   }
   
-  .image {
+  .invoiceImage {
     margin-right: 10px;  /* Adjust spacing as needed */
   }
   
-  .text {
+  .invoiceText {
     flex: 1;  /* Makes the text container flexible */
   }
   
-  .tab {
+  .invoiceTab {
     padding-left: 20px;  /* Adjust padding for the tab effect */
     color : #515151;
   }
 
-table {
+.invoicetable {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;  /* This will make columns take equal space */
   }
 
-  .table-cell {
+  .invoicetable-cell {
     max-width: 150px; /* Adjust based on your needs */
     word-wrap: break-word; /* Ensures text wraps within the cell */
     white-space: normal; /* Allows text to wrap */
 }
   
-  th, td {
+.invoiceth, .invoicetd {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px 16px;  /* Increase padding to add space between columns */
   }
   
-  th {
+  .invoiceth {
     background-color: #f2f2f2;
   }
 
-  .option:hover {
+  .invoiceoption:hover {
     background-color: rgb(226, 226, 226);
     transform: translateY(-3px);
 }
-  .option{
+  .invoiceoption{
     padding: 12px 20px;
     border-radius: 12px;
     border-radius: 8px;
@@ -80,7 +80,6 @@ table {
     transition: background-color 0.3s ease, transform 0.2s ease;
 
   }
-  
   
 /*end invoice style*/
 
