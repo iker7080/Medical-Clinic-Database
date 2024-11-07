@@ -90,6 +90,7 @@ app.post("/login", (req, res) => {
 });
 
 //invoice queries
+
 // Get specific info for a patient
 app.post("/SearchPatient", (req, res) => {
     const { patientID, option, choice} = req.body;
@@ -99,8 +100,8 @@ app.post("/SearchPatient", (req, res) => {
     console.log(choice);
 
 
-   const q1 = "SELECT medical_ID, patient.billingID, first_name, last_name, address_line_1, address_line_2, city, state, zip, appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID FROM appointment, billing_cost_table, patient WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.patientmedicalID = ? AND appointment.isPaid = 0;";
-    const q2 = "SELECT medical_ID, first_name, last_name, address_line_1, address_line_2, city, state, zip, invoice.appointment_ID, dateTime, doctor, cost, isPaid , nurse, billing_cost_table.appointment_type, officeID, invoice.created FROM appointment, billing_cost_table, patient, invoice WHERE billing_cost_table.appointment_type = appointment.appointment_type AND patient.medical_ID = appointment.patientmedicalID AND appointment.appointment_ID = invoice.appointment_ID AND appointment.patientmedicalID = ? AND appointment.isPaid = 1;";
+    const q1 = "SELECT invoice.appointment_ID, invoice.appointmentDateTime, invoice.amountCharged, invoice.amountDue, appointment.officeID, appointment.patientName, appointment.doctor, appointment.nurse, appointment.appointment_type, invoice.patientmedicalID , invoice.created, patient.address_line_1, patient.address_line_2, patient.city, patient.state, patient.zip FROM invoice, appointment, patient WHERE invoice.appointment_ID = appointment.appointment_ID AND invoice.patientMedicalID = appointment.patientMedicalID AND invoice.patientmedicalID = patient.medical_ID AND invoice.amountDue > 0.00 AND appointment.patientmedicalID = ?;";
+    const q2 = "SELECT invoice.appointment_ID, invoice.appointmentDateTime, invoice.amountCharged, invoice.amountDue, appointment.officeID, appointment.patientName, appointment.doctor, appointment.nurse, appointment.appointment_type, invoice.patientmedicalID , invoice.created, patient.address_line_1, patient.address_line_2, patient.city, patient.state, patient.zip FROM invoice, appointment, patient WHERE invoice.appointment_ID = appointment.appointment_ID AND invoice.patientMedicalID = appointment.patientMedicalID AND invoice.patientmedicalID = patient.medical_ID AND invoice.amountDue = 0.00 AND appointment.patientmedicalID = ?;";
     const q3 = "SELECT medical_ID FROM patient WHERE medical_ID = ?;";
 
     if(!option){
@@ -142,10 +143,25 @@ app.post("/Created_invoice", (req, res) => {
 });
 
 
-// Get Appointments that have not been paid in 2 weeks
-app.post("/Past_Due_Patients", (req, res) => {
+//get patient info for all patients with a certain name
+app.post("/Search_Patient_ID", (req, res) => {
+    const {query} = req.body;
+    console.log(query);
 
-    const q = "SELECT  DISTINCT patient.medical_ID, patient.first_name, patient.last_name, patient.personal_email, home_phone, work_phone, cell_phone FROM appointment, patient WHERE (appointment.dateTime < DATE_SUB(CURDATE(), INTERVAL 14 DAY)) AND appointment.isPaid = 0 AND patient.medical_ID = appointment.patientmedicalID;";
+    db.query(query, (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+
+});
+
+
+
+
+// Get Appointments that have not been paid in 2 weeks
+app.get("/Past_Due_Patients", (req, res) => {
+
+    const q = "SELECT  DISTINCT patient.medical_ID, patient.first_name, patient.last_name, patient.personal_email, home_phone, work_phone, cell_phone FROM invoice, patient WHERE (invoice.appointmentDateTime < DATE_SUB(CURDATE(), INTERVAL 14 DAY)) AND invoice.amountDue > 0 AND patient.medical_ID = invoice.patientmedicalID;";
 
     db.query(q, (err, data) => {
         if (err) return res.status(500).json(err);
@@ -155,7 +171,7 @@ app.post("/Past_Due_Patients", (req, res) => {
 });
 
 // Switch appointment to paid
-app.put("/See_Patient_Balance", (req, res) => {
+app.post("/See_Patient_Balance", (req, res) => {
     const  patientID  = req.params.id;
 
     const values =[
@@ -163,29 +179,14 @@ app.put("/See_Patient_Balance", (req, res) => {
     ]
 
     console.log(values);
-    const q = "UPDATE appointment SET isPaid = 1 WHERE appointment_ID = ?;";
+    const q = "UPDATE invoice SET amountDue = 0.00 WHERE appointment_ID = ?";
     db.query(q, [values, patientID], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.json(data);
     });
 });
 
-// Insert invoice
-app.post("/See_Patient_Balance", (req, res) => {
-    const  q  = req.body.q;
 
-    const values =[
-        req.body.q
-    ]
-
-
-    console.log(q);
-    const temp = "INSERT INTO invoices (appointment_ID) VALUES (?);";
-    db.query(q, (err, data) => {
-        if (err) return res.status(500).json(err);
-        return res.json(data);
-    });
-});
 //end of invoice queries
 
 
