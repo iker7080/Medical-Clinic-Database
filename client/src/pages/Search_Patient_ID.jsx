@@ -35,6 +35,8 @@ const Search_Patient_ID = () => {
            return;
         }
         localStorage.setItem("resulting-patients", JSON.stringify(res.data));
+        localStorage.setItem("search-entry", patientFirstName+" "+patientLastName);
+
         navigate("/billing_staff_view/Search_Patient_ID/Results_Patient_ID");
 
         
@@ -70,7 +72,7 @@ const Search_Patient_ID = () => {
                 
                 <button className = 'invoiceoption' onClick={SearchPatient}>Search Patient</button>
                 <br />
-                <button className = "logout" onClick={handleLogout}>Logout</button>
+                <button className = "logout" onClick={handleLogout}>Return</button>
 
 
         </div>
