@@ -7,9 +7,11 @@ const Results_Patient_ID = () => {
     const navigate = useNavigate();
 
     const [resultpatient, setresultpatient] = useState('');
+    const [searchentry, setsearchentry] = useState('');
 
     useEffect(() => {
         const results_Data = localStorage.getItem('resulting-patients');
+        setsearchentry(localStorage.getItem('search-entry'));
         if (results_Data) {
             setresultpatient(JSON.parse(results_Data));
             console.log('Retrieved patients data:', resultpatient); // Add this line for debugging
@@ -17,7 +19,8 @@ const Results_Patient_ID = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('resulting-patients'); // Clear employee info
+        localStorage.removeItem('resulting-patients'); // Clear patients info
+        localStorage.removeItem('search-entry');
         navigate('/Billing_Staff_View/Search_Patient_ID'); // Navigate to the main page
     };
 
@@ -32,7 +35,7 @@ const Results_Patient_ID = () => {
     try{
         return(
             <div>
-                <h1>Results for given name: </h1>
+                <h1>Results for given name: {searchentry}</h1>
             <div className='invoiceList'>
               <table className='invoicetable'>
                 <thead>
@@ -77,4 +80,6 @@ const Results_Patient_ID = () => {
 
 
 export default Results_Patient_ID;
+
+
 
