@@ -19,6 +19,8 @@ import SearchPatient from "./pages/SearchPatient";
 import See_Patient_Balance from "./pages/See_Patient_Balance";
 import See_Previous_Invoices from "./pages/See_Previous_Invoices";
 import Past_Due_Patients from "./pages/Past_Due_Patients";
+import Search_Patient_ID from "./pages/Search_Patient_ID";
+import Results_Patient_ID from "./pages/Results_Patient_ID";
 //end of billing staff routes
 
 import Office_Staff_View from "./pages/Office_Staff_View";
@@ -48,6 +50,9 @@ function App() {
           <Route path="/billing_staff_view/SearchPatient/See_Previous_Invoices" element={<See_Previous_Invoices />} />
           <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance/Created_invoice" element={<Created_invoice />} />
           <Route path="/billing_staff_view/Past_Due_Patients" element={<Past_Due_Patients />} />
+          <Route path="/billing_staff_view/Search_Patient_ID" element={<Search_Patient_ID />} />
+          <Route path="/billing_staff_view/Search_Patient_ID/Results_Patient_ID" element={<Results_Patient_ID />} />
+
   
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
