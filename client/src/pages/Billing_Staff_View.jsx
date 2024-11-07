@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './billing_staff_invoice.css';
 
 
 const Billing_Staff_View = () => {
@@ -22,13 +22,24 @@ const Billing_Staff_View = () => {
     };
 
     const getPastDueBills = async () =>{
-
-        const res = await axios.post(`http://localhost:3000/Past_Due_Patients`);
+        try{
+        const res = await axios.get(`http://localhost:3000/Past_Due_Patients`);
         localStorage.setItem('Past_Due_Patients', JSON.stringify(res.data));
-        console.log(res.data);
+        console.log("past due patient data:",res.data);
         navigate("/billing_staff_view/Past_Due_Patients");
+        }catch(e){
+            console.log("catched");
+        }
         return;
 
+    }
+
+    
+    const searchPatientID = () =>{
+
+            navigate("/billing_staff_view/Search_Patient_ID");
+
+            return;
     }
 
 
@@ -43,6 +54,7 @@ const Billing_Staff_View = () => {
         return <div>No employee information found.</div>;
     }
 
+
     return (
         <div className = "form">
             <h1>Employee Information</h1>
@@ -52,6 +64,7 @@ const Billing_Staff_View = () => {
             <button className = "invoiceoption" onClick={() => handleonClick(false)}>Pay Due Bills of a Patient</button>
             <button className = "invoiceoption"onClick={() => handleonClick(true)}>View Previous Invoices of a Patient</button>
             <button className = "invoiceoption"onClick={getPastDueBills}>View Patients with Past Due Bills</button>
+            <button className = "invoiceoption"onClick={searchPatientID}>Search PatientID</button>
             <button className = "logout" onClick={handleLogout}>Logout</button>
         </div>
     );
