@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './billing_staff_invoice.css';
 
 
 const See_Previous_Invoices = () => {
@@ -56,8 +56,8 @@ try{
     return (
         <div>
             <h1>Paid Invoices</h1>
-            <p>ID: {patient[0].medical_ID}</p>
-            <p>Name: {patient[0].first_name} {patient[0].last_name}</p>
+            <p>ID: {patient[0].patientmedicalID}</p>
+            <p>Name: {patient[0].patientName}</p>
 
             <div className='invoiceList'>
                 <table className='invoicetable'>
@@ -74,7 +74,7 @@ try{
                         {patient.map((patient, index) => (
                                 <tr key ={patient.appointment_ID}>
                                 <td>{patient.appointment_ID}</td>
-                                <td>{patient.dateTime}</td>
+                                <td>{patient.appointmentDateTime}</td>
                                 <td>{patient.doctor}</td>
                                 <td>{patient.created}</td>
                                 <td>
