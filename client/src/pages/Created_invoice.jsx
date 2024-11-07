@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../assets/redcross.png';
-import './style.css';
+import './billing_staff_invoice.css';
 
 
 const Created_invoice = () => {
@@ -15,8 +15,6 @@ const Created_invoice = () => {
     
     const [office, setOffice] = useState('');
 
-    
-
 
     useEffect(() => {
         const app_Data = localStorage.getItem('single_appointment');
@@ -26,10 +24,10 @@ const Created_invoice = () => {
         }
         const off_Data = localStorage.getItem('office_loc');
         if (off_Data) {
-            setOffice(JSON.parse(off_Data)[0]);
-            console.log('Retrieved office data:', office);
-
+            setOffice(JSON.parse(off_Data));
+            console.log('Retrieved office data:', JSON.parse(off_Data));
         }
+        
     }, []);
 
     const handlePrint = () => {
@@ -50,11 +48,8 @@ const Created_invoice = () => {
     };
 
     const getDate = () =>{
-        let today = new Date();
-        if(choice){
+        let today = new Date(appointment.created);
 
-            today = new Date(appointment.created);
-        }
         let formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
         return formattedDate;
 
@@ -78,8 +73,8 @@ const Created_invoice = () => {
        
         if(!choice){
             localStorage.removeItem('patient');
-            const patientID = appointment.medical_ID;
-            console.log("ID: ", patientID);
+            const patientID = appointment.patientmedicalID;
+            console.log("patient ID: ", patientID);
             
             const res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID}); 
             localStorage.setItem('patient', JSON.stringify(res.data));
@@ -111,7 +106,7 @@ const Created_invoice = () => {
             
             <br />Issue date (MM/DD/YYYY): {getDate()}
             <h2>Invoice To:</h2>
-            {appointment.first_name} {appointment.last_name}
+            {appointment.patientName}
             <br />{appointment.address_line_1} {appointment.address_line_2}
             <br />{appointment.city}, {appointment.state} {appointment.zip}
             <h4>Status: <span style = {{color : 'green'}}>PAID</span></h4>
@@ -137,12 +132,12 @@ const Created_invoice = () => {
                             
                         </td>
                         <td>1</td>
-                        <td> ${appointment.cost}</td>
+                        <td> $ {appointment.amountCharged}</td>
                     </tr>
                     
                 </tbody>
             </table>
-            <h4 style={{ textAlign: 'right' }} >Total $ {appointment.cost}</h4>
+            <h4 style={{ textAlign: 'right' }} >Total $ {appointment.amountCharged}</h4>
             <br /><button onClick={handleLogout}>Return</button> <button onClick={handlePrint}>Print This Page</button>
         </div>
     );
