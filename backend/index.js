@@ -100,9 +100,9 @@ app.post("/SearchPatient", (req, res) => {
     console.log(choice);
 
 
-    const q1 = "SELECT invoice.appointment_ID, invoice.appointmentDateTime, invoice.amountCharged, invoice.amountDue, appointment.officeID, appointment.patientName, appointment.doctor, appointment.nurse, appointment.appointment_type, invoice.patientmedicalID , invoice.created, patient.address_line_1, patient.address_line_2, patient.city, patient.state, patient.zip FROM invoice, appointment, patient WHERE invoice.appointment_ID = appointment.appointment_ID AND invoice.patientMedicalID = appointment.patientMedicalID AND invoice.patientmedicalID = patient.medical_ID AND invoice.amountDue > 0.00 AND appointment.patientmedicalID = ?;";
-    const q2 = "SELECT invoice.appointment_ID, invoice.appointmentDateTime, invoice.amountCharged, invoice.amountDue, appointment.officeID, appointment.patientName, appointment.doctor, appointment.nurse, appointment.appointment_type, invoice.patientmedicalID , invoice.created, patient.address_line_1, patient.address_line_2, patient.city, patient.state, patient.zip FROM invoice, appointment, patient WHERE invoice.appointment_ID = appointment.appointment_ID AND invoice.patientMedicalID = appointment.patientMedicalID AND invoice.patientmedicalID = patient.medical_ID AND invoice.amountDue = 0.00 AND appointment.patientmedicalID = ?;";
-    const q3 = "SELECT medical_ID FROM patient WHERE medical_ID = ?;";
+    const q1 = "SELECT invoice.appointment_ID, invoice.appointmentDateTime, invoice.amountCharged, invoice.amountDue, appointment.officeID, appointment.patientName, appointment.doctor, appointment.nurse, appointment.appointment_type, invoice.patientBillingID , invoice.created, patient.address_line_1, patient.address_line_2, patient.city, patient.state, patient.zip FROM invoice, appointment, patient WHERE invoice.appointment_ID = appointment.appointment_ID  AND invoice.patientBillingID = patient.billingID AND patient.medical_ID = appointment.patientmedicalID AND invoice.amountDue > 0.00 AND invoice.patientBillingID = ?;";
+    const q2 = "SELECT invoice.appointment_ID, invoice.appointmentDateTime, invoice.amountCharged, invoice.amountDue, appointment.officeID, appointment.patientName, appointment.doctor, appointment.nurse, appointment.appointment_type, invoice.patientBillingID , invoice.created, patient.address_line_1, patient.address_line_2, patient.city, patient.state, patient.zip FROM invoice, appointment, patient WHERE invoice.appointment_ID = appointment.appointment_ID  AND invoice.patientBillingID = patient.billingID AND patient.medical_ID = appointment.patientmedicalID AND invoice.amountDue = 0.00 AND invoice.patientBillingID = ?;";
+    const q3 = "SELECT billingID FROM patient WHERE billingID = ?;";
 
     if(!option){
         if(!choice){
@@ -133,7 +133,7 @@ app.post("/Created_invoice", (req, res) => {
     const {offID} = req.body;
     console.log(offID);
 
-    const q = "SELECT * FROM office WHERE location_ID = ?;";
+    const q = "SELECT DISTINCT * FROM office WHERE location_ID = ?;";
 
     db.query(q, [offID], (err, data) => {
         if (err) return res.status(500).json(err);
@@ -161,7 +161,7 @@ app.post("/Search_Patient_ID", (req, res) => {
 // Get Appointments that have not been paid in 2 weeks
 app.get("/Past_Due_Patients", (req, res) => {
 
-    const q = "SELECT  DISTINCT patient.medical_ID, patient.first_name, patient.last_name, patient.personal_email, home_phone, work_phone, cell_phone FROM invoice, patient WHERE (invoice.appointmentDateTime < DATE_SUB(CURDATE(), INTERVAL 14 DAY)) AND invoice.amountDue > 0 AND patient.medical_ID = invoice.patientmedicalID;";
+    const q = "SELECT  DISTINCT patient.billingID, patient.first_name, patient.last_name, patient.personal_email, home_phone, work_phone, cell_phone FROM invoice, patient WHERE (invoice.appointmentDateTime < DATE_SUB(CURDATE(), INTERVAL 14 DAY)) AND invoice.amountDue > 0 AND patient.billingID = invoice.patientBillingID;";
 
     db.query(q, (err, data) => {
         if (err) return res.status(500).json(err);
@@ -185,6 +185,7 @@ app.post("/See_Patient_Balance", (req, res) => {
         return res.json(data);
     });
 });
+
 
 
 //end of invoice queries
