@@ -23,9 +23,6 @@ const Billing_Staff_View = () => {
 
     const getPastDueBills = async () =>{
         try{
-        const res = await axios.get(`http://localhost:3000/Past_Due_Patients`);
-        localStorage.setItem('Past_Due_Patients', JSON.stringify(res.data));
-        console.log("past due patient data:",res.data);
         navigate("/billing_staff_view/Past_Due_Patients");
         }catch(e){
             console.log("catched");
